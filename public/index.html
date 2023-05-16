@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internshala Assignment</title>
+    <style>
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="insertUser">
+        <input type="text" name="user">
+        <button class="add-user">Add User</button>
+    </div>
+    <br>
+    <button class="show-data">Show Data</button>
+    <br>
+    <br>
+    <div class="output"></div>
+    <script>
+        const addUser = document.querySelector(".add-user");
+        const showUser = document.querySelector(".show-data");
+        const output = document.querySelector(".output");
+        const endUrl = "/user"
+
+        addUser.addEventListener("click", () => {
+            const input = document.querySelector("input[name=user]")
+            console.log(input.value)
+            const data = {
+                name: input.value
+            }
+            fetch(endUrl, {
+                method: "post",
+                body: JSON.stringify(data),
+                headers: {
+                    "Content-type": "application/json"
+                }
+            }).then(res => res.json())
+        })
+
+        showUser.addEventListener("click", () => {
+            fetch(endUrl, {
+                method: "get",
+                headers: {
+                    "Content-type": "application/json"
+                }
+            }).then(res => res.json()).then(res => {
+                userData(res)
+            })
+        })
+        function update(e) {
+            const input = document.querySelector("input[name=users]")
+            console.log(e.target.value)
+            console.log(e.target.name)
+            console.log(e.target)
+        }
+        function userData(data) {
+            output.innerHTML = "<div>Users</div>";
+            data.forEach(element => {
+                //console.log(element)
+                const main = document.createElement("div");
+                const myInput = document.createElement("input");
+
+                myInput.setAttribute("type", "text")
+                myInput.value = element.name;
+
+                const span = document.createElement("span");
+                span.textContent = element._id
+                main.append(myInput)
+                main.append(span)
+
+                const button1 = document.createElement("button");
+                button1.textContent = "Update";
+                button1.style.color = "blue";
+
+                button1.addEventListener("click", () => {
+                    element.name = myInput.value
+                   // console.log(element.name)
+                    data = {
+                        name: element.name
+                    }
+
+                    fetch(endUrl + `?id=${element._id}`, {
+                        method: "put",
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json"
+                        }
+                    }).then(res => res.json()).then(res => {
+                       // console.log(res)
+                        myInput.value = element.name;
+                    })
+                })
+
+                const button2 = document.createElement("button");
+                button2.textContent = "Delete";
+                button2.style.color = "red";
+
+                main.append(button1)
+                main.append(button2)
+
+
+                output.append(main)
+            });
+        }
+
+    </script>
+</body>
+
+</html>
