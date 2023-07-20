@@ -12,6 +12,9 @@ const userModel = new mongoose.Schema({
     }, 
     password:{
         type: String
+    },
+    mobile:{
+        type:Number
     }
 }, { timestamps: true });
 
