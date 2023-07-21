@@ -16,9 +16,6 @@ const userModel = new mongoose.Schema({
     mobile:{
         type:Number
     },
-    book:{
-        type: String 
-    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("user",userModel);
