@@ -15,9 +15,6 @@ const userModel = new mongoose.Schema({
     },
     mobile:{
         type:Number
-    },
-    book:{
-        type: String 
     }
 }, { timestamps: true });
 
