@@ -6,6 +6,18 @@ const userModel = new mongoose.Schema({
     },
     usernmae:{
         type: String
+    },
+    email:{
+        type: String
+    }, 
+    password:{
+        type: String
+    },
+    mobile:{
+        type:Number
+    },
+    book:{
+        type: String 
     }
 }, { timestamps: true });
 
